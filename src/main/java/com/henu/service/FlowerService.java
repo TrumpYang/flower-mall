@@ -20,4 +20,6 @@ public interface FlowerService {
 
     IPage<Flower> selectPage(Page page);
 
+    List<Flower> searchFlowerByName (String name);
+
 }

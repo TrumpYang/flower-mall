@@ -49,4 +49,9 @@ public class FlowerServiceImpl implements FlowerService {
     public IPage<Flower> selectPage(Page page) {
         return flowerMapper.selectPage(page, null);
     }
+
+    @Override
+    public List<Flower> searchFlowerByName(String name) {
+        return flowerMapper.searchFlowerByName(name);
+    }
 }

@@ -82,4 +82,9 @@ public class FlowerController extends HttpServlet {
         return modelAndView;
     }
 
+    @RequestMapping("search")
+    @ResponseBody
+    public List<Flower> searchFlowerByName (String name){
+        return flowerService.searchFlowerByName(name);
+    }
 }
