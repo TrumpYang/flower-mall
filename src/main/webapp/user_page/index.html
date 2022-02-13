@@ -57,7 +57,7 @@
                                         <ul>
                                             <li><a href="index.html">Home</a></li>
                                             <li><a href="shop.html">Shop</a></li>
-                                            <li><a href="product-details.html">Product Details</a></li>
+                                            <li><a href="product-details.jsp">Product Details</a></li>
                                         </ul>
                                     </nav>
                                     <!-- main menu navbar end -->
@@ -171,7 +171,7 @@
                         <ul class="mobile-menu">
                             <li><a href="index.html">Home</a></li>
                                             <li><a href="shop.html">Shop</a></li>
-                                            <li><a href="product-details.html">Product Details</a></li>
+                                            <li><a href="product-details.jsp">Product Details</a></li>
                         </ul>
                     </nav>
                     <!-- mobile menu navigation end -->
@@ -368,7 +368,7 @@
                             <!-- product single item start -->
                             <div class="product-item">
                                 <figure class="product-thumb">
-                                    <a href="product-details.html">
+                                    <a href="product-details.jsp">
                                         <img class="pri-img" src="assets/img/product/product-9.jpg" alt="product">
 
                                     </a>
@@ -394,7 +394,7 @@
                             </div>
                             <div class="product-item">
                                 <figure class="product-thumb">
-                                    <a href="product-details.html">
+                                    <a href="product-details.jsp">
                                         <img class="pri-img" src="assets/img/product/product-9.jpg" alt="product">
 
                                     </a>
@@ -411,7 +411,7 @@
                                 </figure>
                                 <div class="product-caption">
                                     <p class="product-name">
-                                        <a href="product-details.html">Blossom bouquet flower</a>
+                                        <a href="product-details.jsp">Blossom bouquet flower</a>
                                     </p>
                                     <div class="price-box">
                                         <span class="price-regular">$50.00</span>
@@ -568,13 +568,13 @@
                         <ul>
                             <li class="minicart-item">
                                 <div class="minicart-thumb">
-                                    <a href="product-details.html">
+                                    <a href="product-details.jsp">
                                         <img src="assets/img/cart/cart-1.jpg" alt="product">
                                     </a>
                                 </div>
                                 <div class="minicart-content">
                                     <h3 class="product-name">
-                                        <a href="product-details.html">Flowers bouquet pink for all flower lovers</a>
+                                        <a href="product-details.jsp">Flowers bouquet pink for all flower lovers</a>
                                     </h3>
                                     <p>
                                         <span class="cart-quantity">1 <strong>&times;</strong></span>
@@ -585,13 +585,13 @@
                             </li>
                             <li class="minicart-item">
                                 <div class="minicart-thumb">
-                                    <a href="product-details.html">
+                                    <a href="product-details.jsp">
                                         <img src="assets/img/cart/cart-2.jpg" alt="product">
                                     </a>
                                 </div>
                                 <div class="minicart-content">
                                     <h3 class="product-name">
-                                        <a href="product-details.html">Jasmine flowers white for all flower lovers</a>
+                                        <a href="product-details.jsp">Jasmine flowers white for all flower lovers</a>
                                     </h3>
                                     <p>
                                         <span class="cart-quantity">1 <strong>&times;</strong></span>
@@ -674,8 +674,7 @@
                             "                    <div class=\"col-lg-3 col-md-4 col-sm-6\">\n" +
                             "                        <div class=\"product-item mt-40\">\n" +
                             "                            <figure class=\"product-thumb\">\n" +
-                            "                                <a href=\"product-details.html\">\n" +
-
+                            "                                <a href=\"go(" +result['id']+ ")\">\n" +
                             "                                    <img class=\"pri-img\" src=" +result['pic']+ " alt=\"product\">\n" +
                             "                                </a>\n" +
                             "                                <div class=\"product-badge\">\n" +
@@ -696,8 +695,8 @@
                             "                                <p class=\"product-name\">\n" +
                             "\n" +
                             "<!--                                    加一个隐藏id 属性 方便跳转到 详情页-->\n" +
-                            ""+
-                            "                                    <a href=\"product-details.html\">" +
+                            "  <input type=\"hidden\" id=\"flower_id\">"+
+                            "                                    <a href=\"product-details.jsp\">" +
                             "</a>\n" +                          result['flowerName']+
                             "                                </p>\n" +
                             "                                <div class=\"price-box\">\n" +
@@ -752,8 +751,7 @@
                             "                    <div class=\"col-lg-3 col-md-4 col-sm-6\">\n" +
                             "                        <div class=\"product-item mt-40\">\n" +
                             "                            <figure class=\"product-thumb\">\n" +
-                            "                                <a href=\"product-details.html\">\n" +
-
+                            "                            <a href=\"http://localhost:8080/FlowerMall_war_exploded/flower/queryById?id=" +result['id']+ "\"" +">"+
                             "                                    <img class=\"pri-img\" src=" +result['pic']+ " alt=\"product\">\n" +
                             "                                </a>\n" +
                             "                                <div class=\"product-badge\">\n" +
@@ -774,7 +772,7 @@
                             "                                <p class=\"product-name\">\n" +
                             "\n" +
                             "<!--                                    加一个隐藏id 属性 方便跳转到 详情页-->\n" +
-                            "                                    <a href=\"product-details.html\">" +
+                            "                                    <a href=\"product-details.jsp\">" +
                             "</a>\n" +                          result['flowerName']+
                             "                                </p>\n" +
                             "                                <div class=\"price-box\">\n" +
@@ -812,7 +810,10 @@
                 }, dataType: "json"
             });
 
+        }
 
+        function go(id){
+            alert(id)
         }
 
 

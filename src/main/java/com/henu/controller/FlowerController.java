@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServlet;
 import java.util.List;
-
+@SessionAttributes(value={"flower"},types={Flower.class})
 @Controller
 //   管理员简单的增删改查
 @RequestMapping("/flower")
@@ -64,10 +65,14 @@ public class FlowerController extends HttpServlet {
     }
 
     @RequestMapping("queryById")
-    @ResponseBody
-    public Flower queryById(String id) {
+//当重定向的时候 无法传递参数 此时只能用session 进行传输
+    public ModelAndView queryById(String id) {
         Flower flower = flowerService.queryFlowerById(Integer.valueOf(id)); //可能会抛出异常
-        return flower;
+        ModelAndView modelAndView = new ModelAndView();
+//       将查询到的model传到下个页面
+        modelAndView.addObject("flower", flower);
+        modelAndView.setViewName("redirect:/user_page/product-details.jsp");
+        return modelAndView;
     }
 
 
