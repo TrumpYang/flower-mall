@@ -123,7 +123,7 @@
                         </div>
                         <div class="box-tools pull-right">
                             <div class="has-feedback">
-                                <input type="text" class="form-control input-sm"
+                                <input type="text" id="search_input" class="form-control input-sm"
                                        placeholder="搜索"> <span
                                     class="glyphicon glyphicon-search form-control-feedback"></span>
                             </div>
@@ -329,9 +329,64 @@
         $('ul.pagination').empty()
     }
 
+
+    function ajaxSearch(name,current,size){
+        //页面加载去请求ajax
+        $.ajax({
+            url: "${pageContext.request.contextPath}/flower/search",
+            type: "POST",
+            // 当前页数第一页 每次显示三条数据 三个参数 搜索的名字 返回的数据条数
+            data: {"name":name,"current": current, "size": size},
+            success: function (data) {
+                //js 开始解析json
+                //拼接元素
+                var res = data.records
+                var pageSize = data.pages
+                var total = data.total
+                var current = data.current
+
+                $('#pageDetail').text("总共 " + pageSize + " 页 " + " 共计" + total + "条数据  " + "当前页码：" + current)
+                $("#currentPage").text(current)
+                $("#pageSize").text(data.size)   // 总共的页码数
+                $('ul.pagination').append("<li><button>上一页</button></li>");
+                var li_item
+                //    循环加载页码
+                for (var count = 1; count <= pageSize; count++) {
+                    li_item = "<li>" + "<button>" + count + "</button></li>"
+                    $('ul.pagination').append(li_item);
+                }
+                $('ul.pagination').append("<li><button>下一页</button></li>");
+
+
+                //循环加载表格数据
+                $.each(res, function (i, result) {
+                    var item;
+                    item =
+                        "<tr>" +
+                        "<td>" + "<img class=\"cart_img\" src=\"" + result['pic'] + "\" title=\"点击看大图\" alt=\"图片失效\" rel=\"v:photo\"\n" +
+                        "style=\"max-width: 67px;max-height: 100px;\"></td>" +
+                        "<td>" + result['id'] + "</td>" +
+                        "<td>" + result['flowerName'] + "</td>" +
+                        "<td>" + result['flowerLanguage'] + "</td>" +
+                        "<td>" + result['price'] + "</td>" +
+                        "<td>" + result['material'] + "</td>" +
+                        "<td>" + result['details'] + "</td>" +
+                        "<td>" + "<button class=\"btn bg-olive btn-xs\">编辑</button>" + "</td>" +
+                        "<td>" + "<button class=\"btn bg-olive btn-xs\">删除</button>" + "</td>" +
+                        "</tr>";
+                    $('.table').append(item);
+                });
+
+
+            }, dataType: "json"
+        });
+    }
+
     $(document)
         .ready(
             function () {
+
+
                 //一开始请求 第一页 三条数据
                 ajaxQuery(1, 3)
                 //按钮的触发事件
@@ -423,6 +478,21 @@
                             $(this).data("clicks",
                                 !clicks);
                         });
+                //當用戶按下回車 触发搜索事件
+                $('#search_input').bind('keypress',function(event){
+                    if(event.keyCode == "13")
+                    {
+                        clearTable()
+                        ajaxSearch($('#search_input').val(),1,3)
+                    }
+                });
+
+                $('#search_input').bind('click',function(event){
+                    clearTable()
+                    ajaxSearch($('#search_input').val(),1,3)
+                });
+
+
             });
 </script>
 </body>

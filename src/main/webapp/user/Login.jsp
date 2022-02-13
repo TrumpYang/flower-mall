@@ -1,10 +1,9 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
-
     <script src="../static/js/jquery.min.js"></script>
     <script src="../static/js/index.js"></script>
     <link rel="stylesheet" href="../static/css/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -68,4 +67,3 @@
 
 
 </body>
-</html>

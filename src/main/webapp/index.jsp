@@ -9,7 +9,7 @@
 </head>
 <body>
 <%
-    response.sendRedirect(request.getContextPath() + "/user/index.jsp");
+    response.sendRedirect(request.getContextPath() + "/login.jsp");
 %>
 </body>
 </html>

@@ -84,7 +84,9 @@ public class FlowerController extends HttpServlet {
 
     @RequestMapping("search")
     @ResponseBody
-    public List<Flower> searchFlowerByName (String name){
-        return flowerService.searchFlowerByName(name);
+    public IPage<Flower> searchFlowerByName (String name,int current,int size){
+        Page<Flower> page = new Page<Flower>(current, size);
+        IPage<Flower> data = flowerService.searchFlowerByName(page,name);
+        return data;
     }
 }

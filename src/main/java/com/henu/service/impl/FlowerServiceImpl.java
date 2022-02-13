@@ -1,5 +1,6 @@
 package com.henu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.henu.domain.Flower;
@@ -51,7 +52,11 @@ public class FlowerServiceImpl implements FlowerService {
     }
 
     @Override
-    public List<Flower> searchFlowerByName(String name) {
-        return flowerMapper.searchFlowerByName(name);
+    public IPage<Flower> searchFlowerByName(Page page,String name) {
+
+        QueryWrapper<Flower> queryWrapper = new QueryWrapper<Flower>().like("flower_name",name);
+        return flowerMapper.selectPage(page,queryWrapper);
     }
+
+
 }

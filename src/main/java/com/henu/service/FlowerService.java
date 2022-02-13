@@ -1,5 +1,6 @@
 package com.henu.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.henu.domain.Flower;
@@ -20,6 +21,6 @@ public interface FlowerService {
 
     IPage<Flower> selectPage(Page page);
 
-    List<Flower> searchFlowerByName (String name);
+    IPage searchFlowerByName (Page page,String name);
 
 }

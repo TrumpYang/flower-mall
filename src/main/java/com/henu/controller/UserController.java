@@ -25,7 +25,7 @@ public class UserController extends HttpServlet {
         ModelAndView modelAndView = new ModelAndView();
         if (flag) modelAndView.setViewName("/pages/main.jsp");
         else {
-            modelAndView.setViewName("user/index.jsp");
+            modelAndView.setViewName("user/login.jsp");
             modelAndView.addObject("reg_msg", "用户名存在，注册失败");
         }
         return modelAndView;
@@ -44,7 +44,7 @@ public class UserController extends HttpServlet {
             modelAndView.setViewName("/pages/main.jsp");
         } else {
             //登录失败 继续登录 账号密码错误  把用户名也返回为用户
-            modelAndView.setViewName("/user/index.jsp");
+            modelAndView.setViewName("/user/login.jsp");
             modelAndView.addObject("username", username);
             modelAndView.addObject("msg", "账号或密码错误");
         }
