@@ -19,6 +19,7 @@
     <link href="assets/css/vendor.css" rel="stylesheet">
     <!-- Main Style CSS -->
     <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/alert.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
 <script src="/oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -626,6 +627,23 @@
     </div>
     <!-- Scroll to Top End -->
 
+    <%--    公告提示框   --%>
+    <div class="mask hide">
+        <div class="prompt_box">
+            <div class="prompt_title">
+                <h3 class="prompt_tit">系统提示</h3>
+                <span class="prompt_cancel"></span>
+            </div>
+            <div class="prompt_cont">
+                <p class="prompt_text">这是一个对话框</p>
+                <img class="prompt_image" src="assets/img/flower.jpg" width="150px" height="150px">
+                <span class="prompt_sure">朕知道了</span>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- All vendor & plugins & active js include here -->
     <!--All Vendor Js -->
     <script src="assets/js/vendor.js"></script>
@@ -650,6 +668,29 @@
             }
         }
 
+        function init_message(){
+            // 加载完毕 用 ajax 请求service 层 看是否 有新的公告 根本原理：查询数据库
+            // 看是否有未读消息
+
+            $('.prompt_sure,.prompt_cancel').click(function () {
+                $('.mask').addClass('hide');
+            })
+            $.ajax({
+                url: "http://localhost:8080/FlowerMall_war_exploded/message/showNew",
+                type: "GET",
+                success: function (data) {
+                    var title=data.title
+                    var context =data.context
+                    if(data=null){
+                        $('.mask').addClass('hide');
+                    }else{
+                        $('.prompt_tit').text(title);
+                        $('.prompt_text').text(context);
+                        $('.mask').removeClass('hide');
+                    }
+                }, dataType: "json"
+            });
+        }
 
         function ajaxSearch(name,current,size){
             //页面加载去请求ajax
@@ -812,6 +853,8 @@
             .ready(
                 function () {
                     init_Page()
+
+                    init_message()
                     //一开始请求 第一页 三条数据
                     ajaxQuery(1, 8)
                     //搜索按钮
