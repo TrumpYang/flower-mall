@@ -3540,7 +3540,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
     margin-right: 0;
 }
 
-.paginatoin-area .pagination-box li a {
+.paginatoin-area .pagination-box li button {
     color: #111;
     height: 36px;
     width: 36px;
@@ -3552,18 +3552,18 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
     background-color: #fff;
 }
 
-.paginatoin-area .pagination-box li a i {
+.paginatoin-area .pagination-box li button i {
     font-size: 12px;
     line-height: 36px;
 }
 
-.paginatoin-area .pagination-box li a:hover {
+.paginatoin-area .pagination-box li button:hover {
     color: #fff;
     border-color: #CC2121;
     background-color: #CC2121;
 }
 
-.paginatoin-area .pagination-box li.active a {
+.paginatoin-area .pagination-box li.active button {
     color: #fff;
     background-color: #CC2121;
 }
