@@ -78,7 +78,7 @@
                         <!-- start logo area -->
                         <div class="col-lg-3">
                             <div class="logo">
-                                <a href="index.html">
+                                <a href="index.jsp">
                                     <img src="assets/img/logo/logo.png" alt="">
                                 </a>
                             </div>
@@ -92,7 +92,7 @@
                                     <!-- main menu navbar start -->
                                     <nav class="desktop-menu">
                                         <ul>
-                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="index.jsp">Home</a></li>
                                             <li><a href="shop.html">Shop</a></li>
                                             <li><a href="product-details.jsp">Product Details</a></li>
                                         </ul>
@@ -156,7 +156,7 @@
                     <div class="col-12">
                         <div class="mobile-main-header">
                             <div class="mobile-logo">
-                                <a href="index.html">
+                                <a href="index.jsp">
                                     <img src="assets/img/logo/logo.png" alt="Brand Logo">
                                 </a>
                             </div>
@@ -206,7 +206,7 @@
                     <!-- mobile menu navigation start -->
                     <nav>
                         <ul class="mobile-menu">
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="index.jsp">Home</a></li>
                                             <li><a href="shop.html">Shop</a></li>
                                             <li><a href="product-details.jsp">Product Details</a></li>
                         </ul>
@@ -284,7 +284,7 @@
                             <nav aria-label="breadcrumb">
                                 <h1>产品信息</h1>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="index.jsp"><i class="fa fa-home"></i></a></li>
                                     <li class="breadcrumb-item active" aria-current="page">product details</li>
                                 </ul>
                             </nav>

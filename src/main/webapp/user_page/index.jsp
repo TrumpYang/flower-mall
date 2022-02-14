@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
-<html class="no-js" lang="zxx">
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 
 <head>
     <meta charset="utf-8">
@@ -41,7 +42,7 @@
                         <!-- start logo area -->
                         <div class="col-lg-3">
                             <div class="logo">
-                                <a href="index.html">
+                                <a href="index.jsp">
                                     <img src="assets/img/logo/logo.png" alt="">
                                 </a>
                             </div>
@@ -55,7 +56,7 @@
                                     <!-- main menu navbar start -->
                                     <nav class="desktop-menu">
                                         <ul>
-                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="index.jsp">Home</a></li>
                                             <li><a href="shop.html">Shop</a></li>
                                             <li><a href="product-details.jsp">Product Details</a></li>
                                         </ul>
@@ -81,16 +82,8 @@
                                                 <i class="lnr lnr-user"></i>
                                             </a>
                                             <ul class="dropdown-list">
-                                                <li><a href="#">login</a></li>
-                                                <li><a href="#">register</a></li>
-                                                <li><a href="#">my account</a></li>
+                                                <li><label>用户名：</label><label id="user_name">${sessionScope.userName}</label></li>
                                             </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="lnr lnr-heart"></i>
-                                                <div class="notification">0</div>
-                                            </a>
                                         </li>
                                         <li>
                                             <a href="#" class="minicart-btn">
@@ -119,7 +112,7 @@
                     <div class="col-12">
                         <div class="mobile-main-header">
                             <div class="mobile-logo">
-                                <a href="index.html">
+                                <a href="index.jsp">
                                     <img src="assets/img/logo/logo.png" alt="Brand Logo">
                                 </a>
                             </div>
@@ -169,7 +162,7 @@
                     <!-- mobile menu navigation start -->
                     <nav>
                         <ul class="mobile-menu">
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="index.jsp">Home</a></li>
                                             <li><a href="shop.html">Shop</a></li>
                                             <li><a href="product-details.jsp">Product Details</a></li>
                         </ul>
@@ -200,8 +193,8 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="myaccount">
                                     <a class="dropdown-item" href="#">my account</a>
-                                    <a class="dropdown-item" href="#"> login</a>
-                                    <a class="dropdown-item" href="#">register</a>
+                                    <a class="dropdown-item" href="login.jsp"> login</a>
+                                    <a class="dropdown-item" href="login.jsp">register</a>
                                 </div>
                             </div>
                         </li>
@@ -652,7 +645,17 @@
 
 
 
+        function init_Page(){
 
+            if ($("#user_name").text()==""){
+                var initOption="<li><a href=\"login.jsp\">login</a></li>"+
+                    "<li><a href=\"login.jsp\">register</a></li>"
+                $("ul.dropdown-list").append(initOption)
+            }else {
+                var initOption ="<li><a href=\"http://localhost:8080/FlowerMall_war_exploded/user/logout\">退出登录</a></li>"
+                $("ul.dropdown-list").append(initOption)
+            }
+        }
 
 
         function ajaxSearch(name,current,size){
@@ -821,6 +824,7 @@
         $(document)
             .ready(
                 function () {
+                    init_Page()
                     //一开始请求 第一页 三条数据
                     ajaxQuery(1, 8)
                     //搜索按钮
@@ -847,4 +851,3 @@
 
 </body>
 
-</html>
