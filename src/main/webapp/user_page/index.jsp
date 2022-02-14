@@ -419,14 +419,7 @@
         </section>
         <!-- trending product area end -->
 
-        <!-- Instagram Feed Area Start -->
-        <div class="instagram-feed-area">
-            <div class="instagram-feed-thumb">
-                <div id="instafeed" class="instagram-carousel" data-userid="6666969077" data-accesstoken="6666969077.1677ed0.d325f406d94c4dfab939137c5c2cc6c2">
-                </div>
-            </div>
-        </div>
-        <!-- Instagram Feed Area End -->
+
 
     </main>
     <!-- main wrapper end -->
@@ -672,7 +665,6 @@
                     $.each(res, function (i, result) {
 
 
-
                         var addHtml="<!-- product single item start -->\n" +
                             "                    <div class=\"col-lg-3 col-md-4 col-sm-6\">\n" +
                             "                        <div class=\"product-item mt-40\">\n" +
@@ -798,8 +790,6 @@
 
 
                     });
-
-
                 //    循环之后 添加 ShowMore
 
                     var showMore = " <div class=\"col-12\">\n" +
@@ -808,16 +798,13 @@
                         "                        </div>\n" +
                         "                    </div>"
 
-
                     $('#div_container').append(showMore);
                 }, dataType: "json"
             });
 
         }
 
-        function go(id){
-            alert(id)
-        }
+
 
 
 
@@ -833,15 +820,6 @@
                         ajaxSearch(text,1,4)
                     })
                 });
-
-        $("#fakeButton").click(function(){
-            alert("yes")
-            if($('div#quick_view.is-active').length) { //If the quickview is showed
-                $('div#quick_view.is-active').removeClass('is-active'); //Remove the class to hide
-            }else {
-                $('div#quick_view').addClass('is-active'); //Add the class to show
-            }
-        });
 
 
 
