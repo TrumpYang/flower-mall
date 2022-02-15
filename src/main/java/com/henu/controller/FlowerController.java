@@ -2,6 +2,7 @@ package com.henu.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.henu.domain.Cart;
 import com.henu.domain.Flower;
 import com.henu.service.FlowerService;
 import com.henu.service.UserService;
@@ -86,6 +87,28 @@ public class FlowerController extends HttpServlet {
         modelAndView.setViewName("/pages/flower-update.jsp");
         return modelAndView;
     }
+
+    @RequestMapping("findByFlowerId")
+    @ResponseBody
+    public Flower findByFlowerId(String id) {
+        return flowerService.queryFlowerById(Integer.valueOf(id));
+    }
+    @RequestMapping("/helpAddCart")
+    @ResponseBody
+    public Cart help(String userName,int id,int number){
+        Flower f = flowerService.queryFlowerById(Integer.valueOf(id));
+        Cart cart = new Cart();
+        cart.setId(null);
+        cart.setCount(0);
+        cart.setSingleTotal(0);
+        cart.setNumber(number);
+        cart.setPic(f.getPic());
+        cart.setPrice(f.getPrice());
+        cart.setProductName(f.getFlowerName());
+        cart.setUserName(userName);
+        return cart;
+    }
+
 
     @RequestMapping("search")
     @ResponseBody

@@ -11,4 +11,6 @@ public interface CartService {
     List<Cart> queryItems(String userName);
     BigDecimal queryTotalPrice(String userName);
     int queryTotalCunt(String userName);
+
+    int updateItem(int number,String userName,int id);
 }

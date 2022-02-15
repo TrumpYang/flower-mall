@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +24,18 @@ public class Cart {
     private int number;
     private double price;
     @TableField(exist = false)
+//    用户添加的商品 一项总价格
     private double singleTotal;
     @TableField(exist = false)
-    private double totalPrice;
+    private BigDecimal totalPrice;
+    @TableField(exist = false)
+    private int count;
+//   用户添加的购物车所有数量
+
+    private String pic ;
+
+
+//    图片地址
+
+
 }

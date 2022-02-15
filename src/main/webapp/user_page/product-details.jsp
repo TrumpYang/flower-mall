@@ -118,9 +118,7 @@
                                                 <i class="lnr lnr-user"></i>
                                             </a>
                                             <ul class="dropdown-list">
-                                                <li><a href="#">login</a></li>
-                                                <li><a href="#">register</a></li>
-                                                <li><a href="#">my account</a></li>
+                                                <li><label>用户名：</label><label id="user_name">${sessionScope.userName}</label></li>
                                             </ul>
                                         </li>
                                         <li>
@@ -316,6 +314,7 @@
                                 <div class="col-lg-7">
                                     <div class="product-details-des">
                                         <h3 class="product-name">${flower.flowerName}</h3>
+                                        <input id="flower_id" type="hidden" value=${flower.id} >
                                         <div class="ratings d-flex">
                                             <span><i class="lnr lnr-star"></i></span>
                                             <span><i class="lnr lnr-star"></i></span>
@@ -340,7 +339,7 @@
                                                 <div class="pro-qty"><input type="text" value="1"></div>
                                             </div>
                                             <div class="action_link">
-                                                <a class="btn btn-cart2" href="#">加入到购物车</a>
+                                                <button class="btn btn-cart2" id="addCartBtn">加入到购物车</button>
                                             </div>
                                         </div>
                                         <div class="pro-size">
@@ -767,62 +766,14 @@
                 </div>
                 <div class="minicart-content-box">
                     <div class="minicart-item-wrapper">
-                        <ul>
-                            <li class="minicart-item">
-                                <div class="minicart-thumb">
-                                    <a href="product-details.jsp">
-                                        <img src="assets/img/cart/cart-1.jpg" alt="product">
-                                    </a>
-                                </div>
-                                <div class="minicart-content">
-                                    <h3 class="product-name">
-                                        <a href="product-details.jsp">Flowers bouquet pink for all flower lovers</a>
-                                    </h3>
-                                    <p>
-                                        <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                        <span class="cart-price">$100.00</span>
-                                    </p>
-                                </div>
-                                <button class="minicart-remove"><i class="lnr lnr-cross"></i></button>
-                            </li>
-                            <li class="minicart-item">
-                                <div class="minicart-thumb">
-                                    <a href="product-details.jsp">
-                                        <img src="assets/img/cart/cart-2.jpg" alt="product">
-                                    </a>
-                                </div>
-                                <div class="minicart-content">
-                                    <h3 class="product-name">
-                                        <a href="product-details.jsp">Jasmine flowers white for all flower lovers</a>
-                                    </h3>
-                                    <p>
-                                        <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                        <span class="cart-price">$80.00</span>
-                                    </p>
-                                </div>
-                                <button class="minicart-remove"><i class="lnr lnr-cross"></i></button>
-                            </li>
+                        <ul id="cartContainer">
+                            <!--   已经移交 ajax 动态渲染-->
                         </ul>
                     </div>
 
                     <div class="minicart-pricing-box">
-                        <ul>
-                            <li>
-                                <span>sub-total</span>
-                                <span><strong>$300.00</strong></span>
-                            </li>
-                            <li>
-                                <span>Eco Tax (-2.00)</span>
-                                <span><strong>$10.00</strong></span>
-                            </li>
-                            <li>
-                                <span>VAT (20%)</span>
-                                <span><strong>$60.00</strong></span>
-                            </li>
-                            <li class="total">
-                                <span>total</span>
-                                <span><strong>$370.00</strong></span>
-                            </li>
+                        <ul id="priceContainer">
+                            <!--   已经移交 ajax 动态渲染-->
                         </ul>
                     </div>
 
@@ -855,11 +806,112 @@
     <script>
 
 
+        function init_Page(){
+            if ($("#user_name").text()==""){
+                var initOption="<li><a href=\"login.jsp\">login</a></li>"+
+                    "<li><a href=\"login.jsp\">register</a></li>"
+                $("ul.dropdown-list").append(initOption)
+            }else {
+                var initOption ="<li><a href=\"http://localhost:8080/FlowerMall_war_exploded/user/logout\">退出登录</a></li>"
+                $("ul.dropdown-list").append(initOption)
+            }
+        }
+
+        function ajaxShowCart(userName){
+
+            if(userName==""){
+
+                $('div.minicart-content-box').empty()
+
+                $('div.minicart-content-box').append("<img src=\"assets/img/tip/tip.jpg\" alt=\"Smiley face\" width=\"300\" height=\"300\">")
+
+                $('div.minicart-content-box').append(" <label >您还未登陆，购物车空空如也</label>")
+            }
+            else{
+                //根据用户名请求所有信息
+                $.ajax({
+                    url: "http://localhost:8080/FlowerMall_war_exploded/cart/list",
+                    type: "POST",
+                    // 当前页数第一页 每次显示8条数据
+                    data: {"userName": userName},
+                    success: function (data) {
+                        console.log(data)
+
+                        $.each(data, function (i, result) {
+                            console.log(result['pic'])
+                            var cartHtml="<li class=\"minicart-item\">\n" +
+                                "                            <div class=\"minicart-thumb\">\n" +
+                                "                                <a href=\"index.jsp\">\n" +
+                                "                                    <img src= " +result['pic']+" alt=\"product\">\n" +
+                                "                                </a>\n" +
+                                "                            </div>\n" +
+                                "                            <div class=\"minicart-content\">\n" +
+                                "                                <h3 class=\"product-name\">\n" +
+                                "                                    <a href=\"product-details.jsp\">" +result['productName']+ "</a>\n" +
+                                "                                </h3>\n" +
+                                "                                <p>\n" +
+                                "                                    <span class=\"cart-quantity\">" +result['number']+ " <strong>&times;</strong></span>\n" +
+                                "                                    <span class=\"cart-price\"> ￥" +result['price']+ "</span>\n" +
+                                "                                </p>\n" +
+                                "                            </div>\n" +
+                                "                            <button class=\"minicart-remove\"><i class=\"lnr lnr-cross\"></i></button>\n" +
+                                "                        </li>"
+
+                            $('#cartContainer').append(cartHtml)
+
+                            var priceBox= " <li>\n" +
+                                "                            <span>商品原价</span>\n" +
+                                "                            <span><strong> ￥" +result['totalPrice']+"</strong></span>\n" +
+                                "                        </li>\n" +
+                                "                        <li>\n" +
+                                "                            <span>运费包邮</span>\n" +
+                                "                            <span><strong>" +"￥ 0.0"+ "</strong></span>\n" +
+                                "                        </li>\n" +
+                                "                        <li>\n" +
+                                "                            <span> 关税</span>\n" +
+                                "                            <span><strong>$ 0.0</strong></span>\n" +
+                                "                        </li>\n" +
+                                "                        <li class=\"total\">\n" +
+                                "                            <span>total</span>\n" +
+                                "                            <span><strong>" +result['totalPrice']+ "元</strong></span>\n" +
+                                "                        </li>"
+                            $('#priceContainer').append(priceBox)
+                        });
+                    }
+                })
+
+            }
+
+
+
+        }
+
+        function  addCart(number,id){
+            if ($("#user_name").text()==""){
+                alert("您还未登录")
+                window.location.replace("login.jsp");
+            }
+            else{
+                var name = $("#user_name").text()
+                $.ajax({
+                    url: "http://localhost:8080/FlowerMall_war_exploded/flower/helpAddCart",
+                    data:{"id":id,"number":number,"userName":name},
+                    type:'post',
+                    success: function (res) {
+                         console.log(res)
+                    }
+                })
+
+
+            }
+
+        }
 
         $(document)
             .ready(
                 function () {
-
+                    init_Page()
+                    addCart(1,$('#flower_id').val())
                 });
 
     </script>

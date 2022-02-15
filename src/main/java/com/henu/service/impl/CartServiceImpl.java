@@ -7,13 +7,14 @@ import com.henu.domain.User;
 import com.henu.mapper.CartMapper;
 import com.henu.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Service("cartService")
 public class CartServiceImpl implements CartService {
 
     @Autowired
@@ -27,7 +28,7 @@ public class CartServiceImpl implements CartService {
     public int deleteItemsById(Integer id, String userName) {
         Map<String, Object> columnMap = new HashMap<String, Object>();
         columnMap.put("id", id);
-        columnMap.put("userName", userName);
+        columnMap.put("user_name", userName);
         return  cartMapper.deleteByMap(columnMap);
     }
 
@@ -36,24 +37,24 @@ public class CartServiceImpl implements CartService {
         QueryWrapper<Cart> wrapper = new QueryWrapper<>();
         Map<String, Object> params = new HashMap<>();
 //       设置查询条件
-        params.put("userName",userName);
+        params.put("user_name",userName);
         wrapper.allEq(params);
         List<Cart> temp = cartMapper.selectList(wrapper);
-        List<Cart> res = new ArrayList<>();
-        for (Cart c: temp
-             ) {
-
-        }
-        return  res ;
+        return  temp ;
     }
 
     @Override
     public BigDecimal queryTotalPrice(String userName) {
-        return null;
+        return cartMapper.queryTotalPrice(userName);
     }
 
     @Override
     public int queryTotalCunt(String userName) {
-        return 0;
+        return cartMapper.queryTotalCunt(userName);
+    }
+
+    @Override
+    public int updateItem(int number,String userName,int id) {
+        return cartMapper.updateItems(number, userName, id);
     }
 }

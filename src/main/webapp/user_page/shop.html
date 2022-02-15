@@ -595,63 +595,16 @@
                 <i class="lnr lnr-cross"></i>
             </div>
             <div class="minicart-content-box">
+
                 <div class="minicart-item-wrapper">
-                    <ul>
-                        <li class="minicart-item">
-                            <div class="minicart-thumb">
-                                <a href="product-details.jsp">
-                                    <img src="assets/img/cart/cart-1.jpg" alt="product">
-                                </a>
-                            </div>
-                            <div class="minicart-content">
-                                <h3 class="product-name">
-                                    <a href="product-details.jsp">Flowers bouquet pink for all flower lovers</a>
-                                </h3>
-                                <p>
-                                    <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                    <span class="cart-price">$100.00</span>
-                                </p>
-                            </div>
-                            <button class="minicart-remove"><i class="lnr lnr-cross"></i></button>
-                        </li>
-                        <li class="minicart-item">
-                            <div class="minicart-thumb">
-                                <a href="product-details.jsp">
-                                    <img src="assets/img/cart/cart-2.jpg" alt="product">
-                                </a>
-                            </div>
-                            <div class="minicart-content">
-                                <h3 class="product-name">
-                                    <a href="product-details.jsp">Jasmine flowers white for all flower lovers</a>
-                                </h3>
-                                <p>
-                                    <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                    <span class="cart-price">$80.00</span>
-                                </p>
-                            </div>
-                            <button class="minicart-remove"><i class="lnr lnr-cross"></i></button>
-                        </li>
+                    <ul id="cartContainer">
+                        <!--   已经移交 ajax 动态渲染-->
                     </ul>
                 </div>
 
                 <div class="minicart-pricing-box">
-                    <ul>
-                        <li>
-                            <span>sub-total</span>
-                            <span><strong>$300.00</strong></span>
-                        </li>
-                        <li>
-                            <span>Eco Tax (-2.00)</span>
-                            <span><strong>$10.00</strong></span>
-                        </li>
-                        <li>
-                            <span>VAT (20%)</span>
-                            <span><strong>$60.00</strong></span>
-                        </li>
-                        <li class="total">
-                            <span>total</span>
-                            <span><strong>$370.00</strong></span>
-                        </li>
+                    <ul id="priceContainer">
+<!--                        已经移交 ajax 动态渲染-->
                     </ul>
                 </div>
 
@@ -679,6 +632,83 @@
 <script src="assets/js/jquery.min.js"></script>
 
 <script>
+
+
+    function ajaxShowCart(userName){
+
+        if(userName==""){
+
+            $('div.minicart-content-box').empty()
+
+            $('div.minicart-content-box').append("<img src=\"assets/img/tip/tip.jpg\" alt=\"Smiley face\" width=\"300\" height=\"300\">")
+
+            $('div.minicart-content-box').append(" <label >您还未登陆，购物车空空如也</label>")
+        }
+        else{
+            //根据用户名请求所有信息
+
+            $.ajax({
+                url: "http://localhost:8080/FlowerMall_war_exploded/cart/list",
+                type: "POST",
+                // 当前页数第一页 每次显示8条数据
+                data: {"userName": userName},
+                success: function (data) {
+                    console.log(data)
+
+                    $.each(data, function (i, result) {
+                        console.log(result['pic'])
+                        var cartHtml="<li class=\"minicart-item\">\n" +
+                            "                            <div class=\"minicart-thumb\">\n" +
+                            "                                <a href=\"index.jsp\">\n" +
+                            "                                    <img src= " +result['pic']+" alt=\"product\">\n" +
+                            "                                </a>\n" +
+                            "                            </div>\n" +
+                            "                            <div class=\"minicart-content\">\n" +
+                            "                                <h3 class=\"product-name\">\n" +
+                            "                                    <a href=\"product-details.jsp\">" +result['productName']+ "</a>\n" +
+                            "                                </h3>\n" +
+                            "                                <p>\n" +
+                            "                                    <span class=\"cart-quantity\">" +result['number']+ " <strong>&times;</strong></span>\n" +
+                            "                                    <span class=\"cart-price\"> ￥" +result['price']+ "</span>\n" +
+                            "                                </p>\n" +
+                            "                            </div>\n" +
+                            "                            <button class=\"minicart-remove\"><i class=\"lnr lnr-cross\"></i></button>\n" +
+                            "                        </li>"
+
+                        $('#cartContainer').append(cartHtml)
+
+                        var priceBox= " <li>\n" +
+                            "                            <span>商品原价</span>\n" +
+                            "                            <span><strong> ￥" +result['totalPrice']+"</strong></span>\n" +
+                            "                        </li>\n" +
+                            "                        <li>\n" +
+                            "                            <span>运费包邮</span>\n" +
+                            "                            <span><strong>" +"￥ 0.0"+ "</strong></span>\n" +
+                            "                        </li>\n" +
+                            "                        <li>\n" +
+                            "                            <span> 关税</span>\n" +
+                            "                            <span><strong>$ 0.0</strong></span>\n" +
+                            "                        </li>\n" +
+                            "                        <li class=\"total\">\n" +
+                            "                            <span>total</span>\n" +
+                            "                            <span><strong>" +result['totalPrice']+ "元</strong></span>\n" +
+                            "                        </li>"
+                        $('#priceContainer').append(priceBox)
+                    });
+                }
+            })
+
+
+
+
+
+
+        }
+
+
+
+    }
+
 
     function ajaxShow(current, size) {
         //页面加载去请求ajax
@@ -848,6 +878,8 @@
     $(document)
         .ready(
             function () {
+
+                ajaxShowCart("root")
                 ajaxShow(1, 3)
                 //搜索按钮
                 $(".search-btn").on("click", function () {
