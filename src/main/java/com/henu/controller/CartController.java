@@ -3,11 +3,13 @@ package com.henu.controller;
 import com.henu.domain.Cart;
 import com.henu.domain.Flower;
 import com.henu.service.CartService;
+import com.henu.service.FlowerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -20,9 +22,10 @@ import java.util.List;
 @RequestMapping("/cart")
 public class CartController {
     @Autowired
-
 //    某一个用户的具体清单
     private CartService cartService;
+    @Autowired
+    private FlowerService flowerService;
     @RequestMapping("/list")
     @ResponseBody
     public List<Cart> cartList (String userName){
@@ -53,16 +56,21 @@ public class CartController {
     }
     @RequestMapping("/addCart")
     @ResponseBody
-    public String addItems(String userName,String pic){
-
-        System.out.println(pic+userName);
-        return "success";
-//        if(cartService.addItems(cart)==1) {
-//            return "success";
-//        }
-//        else{
-//            return "error";
-//        }
+    public String addCart(String userName, Integer id, int number){
+        Flower f = flowerService.queryFlowerById(Integer.valueOf(id));
+        Cart cart = new Cart();
+        cart.setId(null);
+        cart.setCount(0);
+        cart.setSingleTotal(0);
+        cart.setNumber(number);
+        cart.setPic(f.getPic());
+        cart.setPrice(f.getPrice());
+        cart.setProductName(f.getFlowerName());
+        cart.setUserName(userName);
+        System.out.println("原始cart："+cart);
+        int res=cartService.addItems(cart);
+        if(res==1) return "success";
+        else return "error";
     }
 
 

@@ -108,11 +108,6 @@
                             <div class="header-configure-wrapper">
                                 <div class="header-configure-area">
                                     <ul class="nav justify-content-end">
-                                        <li>
-                                            <a href="#" class="offcanvas-btn">
-                                                <i class="lnr lnr-magnifier"></i>
-                                            </a>
-                                        </li>
                                         <li class="user-hover">
                                             <a href="#">
                                                 <i class="lnr lnr-user"></i>
@@ -121,12 +116,7 @@
                                                 <li><label>用户名：</label><label id="user_name">${sessionScope.userName}</label></li>
                                             </ul>
                                         </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="lnr lnr-heart"></i>
-                                                <div class="notification">0</div>
-                                            </a>
-                                        </li>
+
                                         <li>
                                             <a href="#" class="minicart-btn">
                                                 <i class="lnr lnr-cart"></i>
@@ -336,7 +326,7 @@
                                         <div class="quantity-cart-box d-flex align-items-center">
                                             <h5>数量:</h5>
                                             <div class="quantity">
-                                                <div class="pro-qty"><input type="text" value="1"></div>
+                                                <div class="pro-qty"><input type="text" value="1" id="productQuanity"></div>
                                             </div>
                                             <div class="action_link">
                                                 <button class="btn btn-cart2" id="addCartBtn">加入到购物车</button>
@@ -805,8 +795,24 @@
 
     <script>
 
-
+        //自定义弹框
+        function Toast(msg,duration){
+            duration=isNaN(duration)?3000:duration;
+            var m = document.createElement('div');
+            m.innerHTML = msg;
+            m.style.cssText="width: 60%;min-width: 150px;opacity: 0.7;height: 30px;color: rgb(255, 255, 255);line-height: 30px;text-align: center;border-radius: 5px;position: fixed;top: 40%;left: 20%;z-index: 999999;background: rgb(0, 0, 0);font-size: 12px;";
+            document.body.appendChild(m);
+            setTimeout(function() {
+                var d = 0.5;
+                m.style.webkitTransition = '-webkit-transform ' + d + 's ease-in, opacity ' + d + 's ease-in';
+                m.style.opacity = '0';
+                setTimeout(function() { document.body.removeChild(m) }, d * 1000);
+            }, duration);
+        }
         function init_Page(){
+
+
+
             if ($("#user_name").text()==""){
                 var initOption="<li><a href=\"login.jsp\">login</a></li>"+
                     "<li><a href=\"login.jsp\">register</a></li>"
@@ -887,18 +893,23 @@
         }
 
         function  addCart(number,id){
+
             if ($("#user_name").text()==""){
                 alert("您还未登录")
                 window.location.replace("login.jsp");
             }
             else{
+
                 var name = $("#user_name").text()
                 $.ajax({
-                    url: "http://localhost:8080/FlowerMall_war_exploded/flower/helpAddCart",
+                    url: "http://localhost:8080/FlowerMall_war_exploded/cart/addCart",
                     data:{"id":id,"number":number,"userName":name},
                     type:'post',
                     success: function (res) {
-                         console.log(res)
+                         if(res=="success"){
+                             Toast("已经成功添加到购物车",2000)
+                             //添加成功之后 刷新一下 要不然 购物车没有
+                         }
                     }
                 })
 
@@ -911,7 +922,16 @@
             .ready(
                 function () {
                     init_Page()
-                    addCart(1,$('#flower_id').val())
+                    $("#addCartBtn").on("click",function (e){
+                        addCart($("#productQuanity").val(),$('#flower_id').val())
+                    })
+                    ajaxShowCart($("#user_name").text())
+
+
+
+                    $("button.minicart-remove").on("click",function (e){
+                        alert(e)
+                    })
                 });
 
     </script>
