@@ -32,44 +32,6 @@
     <header class="header-area">
         <!-- main header start -->
         <div class="main-header d-none d-lg-block">
-            <!-- header top start -->
-            <div class="header-top bdr-bottom">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6">
-                            <div class="welcome-message">
-                                <p>欢迎来到鲜花在线商城</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 text-right">
-                            <div class="header-top-settings">
-                                <ul class="nav align-items-center justify-content-end">
-                                    <li class="language">
-                                        <span>Language:</span>
-                                        <img src="assets/img/icon/en.png" alt="flag"> English
-                                        <i class="fa fa-angle-down"></i>
-                                        <ul class="dropdown-list">
-                                            <li><a href="#"><img src="assets/img/icon/en.png" alt="flag"> english</a></li>
-                                            <li><a href="#"><img src="assets/img/icon/fr.png" alt="flag"> french</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="curreny-wrap">
-                                        <span>Currency:</span>
-                                        $ USD
-                                        <i class="fa fa-angle-down"></i>
-                                        <ul class="dropdown-list curreny-list">
-                                            <li><a href="#">$ usd</a></li>
-                                            <li><a href="#"> € EURO</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- header top end -->
-
             <!-- header middle area start -->
             <div class="header-main-area sticky">
                 <div class="container">
