@@ -10,8 +10,8 @@
                      class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>
-                    <security:authentication property="principal.username"/>
+                <p id="admin">
+                 ${sessionScope.admin}
                 </p>
                 <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
             </div>
@@ -60,7 +60,7 @@
                         <i class="fa fa-circle-o"></i> 产品管理
                     </a></li>
                     <li><a
-                            href="#">
+                            href="order-list.jsp">
                         <i class="fa fa-circle-o"></i> 订单管理
                     </a></li>
 

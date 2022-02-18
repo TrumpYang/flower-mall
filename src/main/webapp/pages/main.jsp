@@ -182,6 +182,13 @@
         $(".textarea").wysihtml5({
             locale: 'zh-CN'
         });
+
+        if($("#admin").text()==""){
+            alert("禁止无session 跳转 admin")
+            window.location.replace("/login.jsp");
+        }
+
+
     });
 
     // 设置激活菜单

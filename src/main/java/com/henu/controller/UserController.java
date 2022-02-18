@@ -70,14 +70,16 @@ public class UserController extends HttpServlet {
 
     //配置 admin登录 地址
     @RequestMapping("/admin")
-    public ModelAndView adminLogin(String username, String password) {
+    public ModelAndView adminLogin(String username, String password,HttpSession session) {
 
         //ModelAndView 模型和视图
         ModelAndView modelAndView = new ModelAndView();
         //封装对象，放在ModelAndView中，作为Model
         if (username.equals("admin") && password.equals("123456")) {
             //登录成功 返回首页
+            session.setAttribute("admin","admin");
             modelAndView.setViewName("/pages/main.jsp");
+
         } else {
             //登录失败 继续登录 账号密码错误  把用户名也返回为用户
             modelAndView.setViewName("/login.jsp");

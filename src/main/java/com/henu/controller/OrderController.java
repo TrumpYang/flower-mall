@@ -26,10 +26,10 @@ public class OrderController {
     }
 
     @RequestMapping("/orderList")
-
     @ResponseBody
     public List<Order> showOrders(){
 
-        return service.showOrders();
+        List<Order> temp =service.showOrders() ;
+        return temp;
     }
 }
