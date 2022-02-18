@@ -37,6 +37,14 @@ public class UserServiceImpl implements UserService {
 
     }
 
+
+
+
+    @Override
+    public int editUser(User user) {
+        return userMapper.updateById(user);
+    }
+
     //用户登录业务
     public Boolean login(String username, String password) {
 
@@ -53,6 +61,16 @@ public class UserServiceImpl implements UserService {
             //说明拿到了User对象 查询成功
             return true;
         } else return false;
+    }
+
+    @Override
+    public User queryUserByName(String userName) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        Map<String, Object> params = new HashMap<>();
+//       设置查询条件
+        params.put("username", userName);
+        wrapper.allEq(params);
+        return userMapper.selectOne(wrapper);
     }
 
 }

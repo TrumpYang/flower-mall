@@ -84,7 +84,7 @@
                                         </a>
                                         <ul class="dropdown-list">
                                             <li><label>用户名：</label><label
-                                                    id="user_name">${sessionScope.userName}</label></li>
+                                                    id="user_name">${sessionScope.user.userName}</label></li>
                                         </ul>
                                     </li>
                                     <li>
@@ -593,7 +593,8 @@
                 "<li><a href=\"login.jsp\">register</a></li>"
             $("ul.dropdown-list").append(initOption)
         } else {
-            var initOption = "<li><a href=\"http://localhost:8080/FlowerMall_war_exploded/user/logout\">退出登录</a></li>"
+            var initOption = "<li><a href=\"http://localhost:8080/FlowerMall_war_exploded/user_page/mine.jsp\">编辑个人信息</a></li>"+
+                "<li><a href=\"http://localhost:8080/FlowerMall_war_exploded/user/logout\">退出登录</a></li>"
             $("ul.dropdown-list").append(initOption)
         }
     }

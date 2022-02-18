@@ -19,6 +19,7 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/alert.css" rel="stylesheet">
     <link href="assets/css/reg.css" rel="stylesheet">
+    <script src="assets/js/jquery.min.js"></script>
     <!--[if lt IE 9]>
     <script src="/oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="/oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -75,7 +76,7 @@
                                         </a>
                                         <ul class="dropdown-list">
                                             <li><label>用户名：</label><label
-                                                    id="user_name">${sessionScope.userName}</label></li>
+                                                    id="user_name">${sessionScope.user.userName}</label></li>
                                         </ul>
                                     </li>
                                     <li>
@@ -152,22 +153,26 @@
 </div>
 <!-- breadcrumb area end -->
 
-<div class="rg_center" >
+<div class="rg_center">
     <div class="rg_form" style="align-content: center">
 
-        <form action="" method="post">
+
 
             <table style="margin: auto">
                 <tr><!--label 标签的作用是当点击文字也会跳到文本输出框-->
                     <!--for属性与ID属性对应规定 label 绑定到哪个表单元素。-->
+
+                    <input type="hidden" value="${sessionScope.user.id}" id="user_id">
                     <td class="td_left"><label for="username">用户名</label></td>
-                    <td class="td_right"><input type="text" name="username" id="username"
-                                                value="<%=request.getAttribute("username")==null?"":request.getAttribute("username")%>">
+
+                    <td class="td_right"><input readonly type="text" name="userName" id="username"
+                                                value="${sessionScope.user.userName}">
                     </td>
                 </tr>
                 <tr>
                     <td class="td_left"><label for="password">密码</label></td>
-                    <td class="td_right"><input type="password" name="password" id="password"></td>
+                    <td class="td_right"><input type="password" name="password" id="password"
+                                                value="${sessionScope.user.password}"></td>
                 </tr>
                 <tr>
                     <td class="td_left"><label for="password">重复密码</label></td>
@@ -177,32 +182,57 @@
                     <td class="td_left"><label for="name">姓名</label></td>
                     <td class="td_right"><input type="text" name="name" id="name"></td>
                 </tr>
-                <tr>
-                    <td class="td_left"><label for="tel">手机号</label></td>
-                    <td class="td_right"><input type="text" name="tel" id="tel"></td>
-                </tr>
-
 
                 <tr><!--label 标签的作用是当点击文字也会跳到文本输出框-->
                     <td class="td_left"><label for="email">收货地址（省级用/分开）</label></td>
-                    <td class="td_right"><input type="email" name="email" id="email"></td>
-                </tr>
-
-
-
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type="submit" value="保存修改" id="btn_sub">
+                    <td class="td_right"><input type="email" name="email" id="email" value="${user.address}">
                     </td>
                 </tr>
 
+                <tr>
+                    <td colspan="2" align="center">
+                        <button  id="btn_sub">保存修改</button>
+                    </td>
+                </tr>
 
             </table>
 
-
-        </form>
     </div>
 </div>
+
+
+<script>
+
+    function init_Page() {
+
+        if ($("#user_name").text() == "") {
+            alert("您还未登录")
+            window.location.replace("login.jsp");
+        }
+
+
+    }
+
+    $(document)
+        .ready(
+            function () {
+                init_Page()
+                $("#btn_sub").on("click",function () {
+                    $.ajax({
+                        url: "http://localhost:8080/FlowerMall_war_exploded/user/update",
+                        type: "POST",
+                        // 当前页数第一页 每次显示三条数据 三个参数 搜索的名字 返回的数据条数
+                        data: {"id": $("#user_id").val(), "userName":  $("#user_name").text(), "password": $("#new_password").val(),"address": $("#email").val()},
+                        success: function (data) {
+                            console.log(data)
+                        }
+                    });
+                })
+            });
+
+
+</script>
+
 
 </body>
 </html>

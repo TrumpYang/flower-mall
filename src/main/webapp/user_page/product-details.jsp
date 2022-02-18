@@ -75,7 +75,7 @@
                                                 <i class="lnr lnr-user"></i>
                                             </a>
                                             <ul class="dropdown-list">
-                                                <li><label>用户名：</label><label id="user_name">${sessionScope.userName}</label></li>
+                                                <li><label>用户名：</label><label id="user_name">${sessionScope.user.userName}</label></li>
                                             </ul>
                                         </li>
 
