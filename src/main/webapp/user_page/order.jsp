@@ -166,7 +166,7 @@
                                     </dt>
                                     <dd>
                                         <p class="tel itemTel">15961726437</p>
-                                        <p class="itemRegion">${sessionScope.user.address}</p>
+                                        <p class="itemRegion" id="address">${sessionScope.user.address}</p>
                                         <span class="edit-btn J_editAddr">编辑</span>
                                     </dd>
 
@@ -233,7 +233,7 @@
                 </div>
                 <div class="checkout-box-ft">
                     <!-- 商品清单 -->
-                    <div id="checkoutGoodsList" class="checkout-goods-box">
+                    <form action="#" method="post" id="checkoutGoodsList" class="checkout-goods-box">
                         <div class="xm-box">
                             <div class="box-hd">
                                 <h2 class="title">确认订单信息</h2>
@@ -241,33 +241,9 @@
                             <div class="box-bd">
                                 <dl class="checkout-goods-list">
 
-                                    <div class="item clearfix">
-                                        <div class="item-row">
-                                            <div class="col col-1">
-                                                <div class="g-pic">
-                                                    <img src="http://i.huasongwang.com/i/g/2019/10/20/06249017619503438_1280.jpg"
-                                                         srcset="http://i.huasongwang.com/i/g/2019/10/20/06249017619503438_1280.jpg"
-                                                         width="100" height="100"/>
-                                                </div>
-                                                <div class="g-info">
-                                                    <a href="#">
-                                                        小米T恤 忍者米兔双截棍 军绿 XXL </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="col col-2">39元</div>
-                                            <div class="col col-3">1</div>
-                                            <div class="col col-4">39元</div>
-                                        </div>
-                                    </div>
-
                                 </dl>
                                 <div class="checkout-count clearfix">
-                                    <div class="checkout-count-extend xm-add-buy">
-                                        <h2 class="title">会员留言</h2></br>
-                                        <input type="text"/>
 
-                                    </div>
                                     <!-- checkout-count-extend -->
                                     <div class="checkout-price">
                                         <ul>
@@ -278,8 +254,8 @@
                                             <li>
                                                 活动优惠：<span>-0元</span>
                                                 <script type="text/javascript">
-                                                    checkoutConfig.activityDiscountMoney = 0;
-                                                    checkoutConfig.totalPrice = 244.00;
+                                                    checkoutConfig.activityDiscountMoney=0;
+                                                    checkoutConfig.totalPrice=244.00;
                                                 </script>
                                             </li>
                                             <li>
@@ -289,41 +265,22 @@
                                                 运费：<span id="postageDesc">0元</span>
                                             </li>
                                         </ul>
-                                        <p class="checkout-total">应付总额：<span><strong
-                                                id="totalPrice">244</strong>元</span></p>
+                                        <p class="checkout-total">应付总额：<span><strong id="totalPrice">244</strong>元</span></p>
                                     </div>
                                     <!--  -->
                                 </div>
                             </div>
-                        </div>
 
-                        <!--S 加价购 产品选择弹框 -->
-                        <div class="modal hide modal-choose-pro" id="J_choosePro-664">
-                            <div class="modal-header">
-                                <span class="close" data-dismiss='modal'><i class="iconfont">&#xe617;</i></span>
-                                <h3>选择产品</h3>
-                                <div class="more">
-                                    <div class="xm-recommend-page clearfix">
-                                        <a class="page-btn-prev   J_carouselPrev iconfont" href="javascript: void(0);">&#xe604;</a><a
-                                            class="page-btn-next  J_carouselNext iconfont" href="javascript: void(0);">&#xe605;</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-body J_chooseProCarousel">
-                                <div class="J_carouselWrap modal-choose-pro-list-wrap">
-                                    <ul class="clearfix J_carouselList">
-                                    </ul>
-                                </div>
                             </div>
 
+
+                        <!-- 商品清单 END -->
+                        <div class="checkout-confirm">
+                            <button  class="btn" id="checkoutToPay">立即下单</button>
                         </div>
 
+                    </form>
 
-                    </div>
-                    <!-- 商品清单 END -->
-                    <div class="checkout-confirm">
-                        <button class="btn" id="checkoutToPay">立即下单</button>
-                    </div>
                 </div>
 
             </form>
@@ -340,6 +297,22 @@
 </div>
 
 <script type="text/javascript">
+
+    //自定义弹框
+    function Toast(msg,duration){
+        duration=isNaN(duration)?3000:duration;
+        var m = document.createElement('div');
+        m.innerHTML = msg;
+        m.style.cssText="width: 60%;min-width: 150px;opacity: 0.7;height: 30px;color: rgb(255, 255, 255);line-height: 30px;text-align: center;border-radius: 5px;position: fixed;top: 40%;left: 20%;z-index: 999999;background: rgb(0, 0, 0);font-size: 12px;";
+        document.body.appendChild(m);
+        setTimeout(function() {
+            var d = 0.5;
+            m.style.webkitTransition = '-webkit-transform ' + d + 's ease-in, opacity ' + d + 's ease-in';
+            m.style.opacity = '0';
+            setTimeout(function() { document.body.removeChild(m) }, d * 1000);
+        }, duration);
+    }
+
     $(document)
         .ready(
             function () {
@@ -379,6 +352,23 @@
 
                     }
                 });
+
+                $("#checkoutToPay").on("click",function (){
+                    var userName=$("#user_name").text()
+                    var address =$("#address").text()
+                    var price =$("#totalPrice").text()
+
+                    $.ajax({
+                        url: "http://localhost:8080/FlowerMall_war_exploded/order/addOrder",
+                        type: "POST",
+                        data: {"userName": userName,"address":address,"price":price},
+                        success:function (data) {
+                            if(data=="success"){
+                                Toast("下单成功",200)
+                            }
+                        }
+                    })
+                })
             });
 
 
