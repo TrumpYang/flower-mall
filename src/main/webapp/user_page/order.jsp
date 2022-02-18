@@ -88,7 +88,7 @@
                                         </a>
                                         <ul class="dropdown-list">
                                             <li><label>用户名：</label><label
-                                                    id="user_name">${sessionScope.userName}</label></li>
+                                                    id="user_name">${sessionScope.user.userName}</label></li>
                                         </ul>
                                     </li>
                                     <li>
@@ -145,36 +145,12 @@
 <!-- end Header Area -->
 <!--收货地址body部分开始-->
 <div class="border_top_cart">
-    <script type="text/javascript">
-        var checkoutConfig = {
-            addressMatch: 'common',
-            addressMatchVarName: 'data',
-            hasPresales: false,
-            hasBigTv: false,
-            hasAir: false,
-            hasScales: false,
-            hasGiftcard: false,
-            totalPrice: 244.00,
-            postage: 10,//运费
-            postFree: true,//活动是否免邮了
-            bcPrice: 150,//计算界值
-            activityDiscountMoney: 0.00,//活动优惠
-            showCouponBox: 0,
-            invoice: {
-                NA: "0",
-                personal: "1",
-                company: "2",
-                electronic: "4"
-            }
-        };
-        var miniCartDisable = true;
-    </script>
+
     <div class="container">
         <div class="checkout-box">
             <form id="checkoutForm" action="#" method="post">
                 <div class="checkout-box-bd">
-                    <!-- 地址状态 0：默认选择；1：新增地址；2：修改地址 -->
-                    <input type="hidden" name="Checkout[addressState]" id="addrState" value="0">
+
                     <!-- 收货地址 -->
                     <div class="xm-box">
                         <div class="box-hd ">
@@ -185,30 +161,17 @@
                             <div class="clearfix xm-address-list" id="checkoutAddrList">
                                 <dl class="item">
                                     <dt>
-                                        <strong class="itemConsignee">潘骏杰</strong>
+                                        <strong class="itemConsignee">${sessionScope.user.userName}</strong>
                                         <span class="itemTag tag">家</span>
                                     </dt>
                                     <dd>
                                         <p class="tel itemTel">15961726437</p>
-                                        <p class="itemRegion">江苏 无锡市 北塘区</p>
-                                        <p class="itemStreet">民丰西苑82号202室(214045)</p>
+                                        <p class="itemRegion">${sessionScope.user.address}</p>
                                         <span class="edit-btn J_editAddr">编辑</span>
                                     </dd>
-                                    <dd style="display:none">
-                                        <input type="radio" name="Checkout[address]" class="addressId"
-                                               value="10140916720030323">
-                                    </dd>
+
                                 </dl>
                             </div>
-                            <input type="hidden" name="newAddress[type]" id="newType" value="common">
-                            <input type="hidden" name="newAddress[consignee]" id="newConsignee">
-                            <input type="hidden" name="newAddress[province]" id="newProvince">
-                            <input type="hidden" name="newAddress[city]" id="newCity">
-                            <input type="hidden" name="newAddress[district]" id="newCounty">
-                            <input type="hidden" name="newAddress[address]" id="newStreet">
-                            <input type="hidden" name="newAddress[zipcode]" id="newZipcode">
-                            <input type="hidden" name="newAddress[tel]" id="newTel">
-                            <input type="hidden" name="newAddress[tag_name]" id="newTag">
 
                             <div class="xm-edit-addr-backdrop" id="J_editAddrBackdrop"></div>
                         </div>
@@ -239,8 +202,6 @@
                             <div class="box-bd">
                                 <ul id="checkoutShipmentList" class="checkout-option-list clearfix J_optionList">
                                     <li class="item selected">
-                                        <input type="radio" data-price="0" name="Checkout[shipment_id]"
-                                               checked="checked" value="1">
                                         <p>
                                             快递配送（免运费） <span></span>
                                         </p>
@@ -279,19 +240,14 @@
                             </div>
                             <div class="box-bd">
                                 <dl class="checkout-goods-list">
-                                    <dt class="clearfix">
-                                        <span class="col col-1">商品名称</span>
-                                        <span class="col col-2">购买价格</span>
-                                        <span class="col col-3">购买数量</span>
-                                        <span class="col col-4">小计（元）</span>
-                                    </dt>
-                                    <dd class="item clearfix">
+
+                                    <div class="item clearfix">
                                         <div class="item-row">
                                             <div class="col col-1">
                                                 <div class="g-pic">
-                                                    <img src="http://i1.mifile.cn/a1/T11lLgB5YT1RXrhCrK!40x40.jpg"
-                                                         srcset="http://i1.mifile.cn/a1/T11lLgB5YT1RXrhCrK!80x80.jpg 2x"
-                                                         width="40" height="40"/>
+                                                    <img src="http://i.huasongwang.com/i/g/2019/10/20/06249017619503438_1280.jpg"
+                                                         srcset="http://i.huasongwang.com/i/g/2019/10/20/06249017619503438_1280.jpg"
+                                                         width="100" height="100"/>
                                                 </div>
                                                 <div class="g-info">
                                                     <a href="#">
@@ -303,45 +259,8 @@
                                             <div class="col col-3">1</div>
                                             <div class="col col-4">39元</div>
                                         </div>
-                                    </dd>
-                                    <dd class="item clearfix">
-                                        <div class="item-row">
-                                            <div class="col col-1">
-                                                <div class="g-pic">
-                                                    <img src="http://i1.mifile.cn/a1/T14BLvBKJT1RXrhCrK!40x40.jpg"
-                                                         srcset="http://i1.mifile.cn/a1/T14BLvBKJT1RXrhCrK!80x80.jpg 2x"
-                                                         width="40" height="40"/>
-                                                </div>
-                                                <div class="g-info">
-                                                    <a href="#">
-                                                        招财猫米兔 白色 </a>
-                                                </div>
-                                            </div>
+                                    </div>
 
-                                            <div class="col col-2">49元</div>
-                                            <div class="col col-3">1</div>
-                                            <div class="col col-4">49元</div>
-                                        </div>
-                                    </dd>
-                                    <dd class="item clearfix">
-                                        <div class="item-row">
-                                            <div class="col col-1">
-                                                <div class="g-pic">
-                                                    <img src="http://i1.mifile.cn/a1/T1rrDgB4DT1RXrhCrK!40x40.jpg"
-                                                         srcset="http://i1.mifile.cn/a1/T1rrDgB4DT1RXrhCrK!80x80.jpg 2x"
-                                                         width="40" height="40"/>
-                                                </div>
-                                                <div class="g-info">
-                                                    <a href="#">
-                                                        小米圆领纯色T恤 男款 红色 XXL </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="col col-2">39元</div>
-                                            <div class="col col-3">4</div>
-                                            <div class="col col-4">156元</div>
-                                        </div>
-                                    </dd>
                                 </dl>
                                 <div class="checkout-count clearfix">
                                     <div class="checkout-count-extend xm-add-buy">
@@ -354,7 +273,7 @@
                                         <ul>
 
                                             <li>
-                                                订单总额：<span>244元</span>
+                                                订单总额：<span id="sumPrice">244元</span>
                                             </li>
                                             <li>
                                                 活动优惠：<span>-0元</span>
@@ -402,11 +321,8 @@
 
                     </div>
                     <!-- 商品清单 END -->
-                    <input type="hidden" id="couponType" name="Checkout[couponsType]">
-                    <input type="hidden" id="couponValue" name="Checkout[couponsValue]">
                     <div class="checkout-confirm">
-
-                        <input type="submit" class="btn" value="立即下单" id="checkoutToPay"/>
+                        <button class="btn" id="checkoutToPay">立即下单</button>
                     </div>
                 </div>
 
@@ -421,6 +337,50 @@
 
 
 
+</div>
 
-</body>
+<script type="text/javascript">
+    $(document)
+        .ready(
+            function () {
 
+                $.ajax({
+                    url: "http://localhost:8080/FlowerMall_war_exploded/cart/list",
+                    type: "POST",
+                    data: {"userName": $("#user_name").text()},
+                    success: function (data) {
+                        console.log(data)
+                        $.each(data, function (i, result) {
+                            var html="     <div class=\"item clearfix\">\n" +
+                                "                                        <div class=\"item-row\">\n" +
+                                "                                            <div class=\"col col-1\">\n" +
+                                "                                                <div class=\"g-pic\">\n" +
+                                "                                                    <img src=" +result['pic']+"\n" +
+                                "                                                         srcset=" +result['pic']+
+                                "                                                         width=\"100\" height=\"100\"/>\n" +
+                                "                                                </div>\n" +
+                                "                                                <div class=\"g-info\">\n" +
+                                "                                                    <a href=\"#\">\n" + result['productName']+
+                                "                                                        </a>\n" +
+                                "                                                </div>\n" +
+                                "                                            </div>\n" +
+                                "\n" +
+                                "                                            <div class=\"col col-2\">" +result['price']+"</div>\n" +
+                                "                                            <div class=\"col col-3\">" +result['number']+"</div>\n" +
+                                "                                            <div class=\"col col-4\">" +result['singleTotal']+ "元</div>\n" +
+                                "                                        </div>\n" +
+                                "                                    </div>"
+
+                            $("dl.checkout-goods-list").append(html)
+                            $("#totalPrice").text(result['totalPrice'])
+                            $("#sumPrice").text(result['totalPrice']+"RMB")
+                        })
+
+
+                    }
+                });
+            });
+
+
+
+</script>

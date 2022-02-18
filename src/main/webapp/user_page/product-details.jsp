@@ -731,7 +731,7 @@
 
                     <div class="minicart-button">
                         <a href="#"><i class="fa fa-shopping-cart"></i> view cart</a>
-                        <a href="#"><i class="fa fa-share"></i> checkout</a>
+                        <a href="order.jsp"><i class="fa fa-share"></i> checkout</a>
                     </div>
                 </div>
             </div>

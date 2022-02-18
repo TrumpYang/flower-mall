@@ -203,6 +203,21 @@
 
 <script>
 
+
+    //自定义弹框
+    function Toast(msg,duration){
+        duration=isNaN(duration)?3000:duration;
+        var m = document.createElement('div');
+        m.innerHTML = msg;
+        m.style.cssText="width: 60%;min-width: 150px;opacity: 0.7;height: 30px;color: rgb(255, 255, 255);line-height: 30px;text-align: center;border-radius: 5px;position: fixed;top: 40%;left: 20%;z-index: 999999;background: rgb(0, 0, 0);font-size: 12px;";
+        document.body.appendChild(m);
+        setTimeout(function() {
+            var d = 0.5;
+            m.style.webkitTransition = '-webkit-transform ' + d + 's ease-in, opacity ' + d + 's ease-in';
+            m.style.opacity = '0';
+            setTimeout(function() { document.body.removeChild(m) }, d * 1000);
+        }, duration);
+    }
     function init_Page() {
 
         if ($("#user_name").text() == "") {
@@ -221,10 +236,10 @@
                     $.ajax({
                         url: "http://localhost:8080/FlowerMall_war_exploded/user/update",
                         type: "POST",
-                        // 当前页数第一页 每次显示三条数据 三个参数 搜索的名字 返回的数据条数
                         data: {"id": $("#user_id").val(), "userName":  $("#user_name").text(), "password": $("#new_password").val(),"address": $("#email").val()},
-                        success: function (data) {
-                            console.log(data)
+                        success: function () {
+                            Toast("更新信息完成,请重新登录",3000)
+                            window.location.replace("login.jsp");
                         }
                     });
                 })

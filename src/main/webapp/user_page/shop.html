@@ -568,7 +568,7 @@
 
                 <div class="minicart-button">
                     <a href="#"><i class="fa fa-shopping-cart"></i> view cart</a>
-                    <a href="#"><i class="fa fa-share"></i> checkout</a>
+                    <a href="order.jsp"><i class="fa fa-share"></i> checkout</a>
                 </div>
             </div>
         </div>
@@ -780,6 +780,10 @@
                 $('#shopContainer').empty()
                 var res = data.records
                 //循环加载数据
+
+
+
+
                 $.each(res, function (i, result) {
                     var addHtml="<!-- product single item start -->\n" +
                         "                    <div class=\"col-lg-3 col-md-4 col-sm-6\">\n" +
